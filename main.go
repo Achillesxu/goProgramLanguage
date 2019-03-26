@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Achillesxu/goProgramLanguage/util"
 	"golang.org/x/net/html"
 	"log"
 	"net/http"
@@ -102,7 +103,16 @@ func main() {
 	//f := squares()
 	//fmt.Println(f())
 	//fmt.Println(f())
-	topoSortPrint()
+	//topoSortPrint()
+	testPoint()
+
+}
+
+func testPoint() {
+	p := util.PointF{1.0, 2}
+	q := util.PointF{4.0, 6}
+	fmt.Println(util.Distance(p, q))
+	fmt.Println(p.Distance(q))
 }
 
 func topoSortPrint() {
