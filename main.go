@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"github.com/Achillesxu/goProgramLanguage/util"
 	"golang.org/x/net/html"
+	"io"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"regexp"
@@ -104,8 +106,73 @@ func main() {
 	//fmt.Println(f())
 	//fmt.Println(f())
 	//topoSortPrint()
-	testPoint()
+	//testPoint()
+	clockServer()
 
+}
+
+func clockServer() {
+	listener, err := net.Listen("tcp", "localhost:8000")
+	if err != nil {
+		log.Fatal(err)
+	}
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Print(err)
+			continue
+		}
+		go handleConn(conn)
+	}
+}
+
+func handleConn(c net.Conn) {
+	defer c.Close()
+	for {
+		_, err := io.WriteString(c, time.Now().Format("15:04:05\n"))
+		if err != nil {
+			return // e.g., client disconnected
+		}
+		time.Sleep(1 * time.Second)
+	}
+}
+
+func clientFunc() {
+	conn, err := net.Dial("tcp", "localhost:8000")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer conn.Close()
+	mustCopy(os.Stdout, conn)
+}
+
+func mustCopy(dst io.Writer, src io.Reader) {
+	if _, err := io.Copy(dst, src); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func spFib() {
+	go spinner(100 * time.Millisecond)
+	const n = 45
+	fibN := fib(n)
+	fmt.Printf("\rFibonacci(%d) = %d\n", n, fibN)
+}
+
+func spinner(delay time.Duration) {
+	for {
+		for _, r := range `-\|/` {
+			fmt.Printf("\r%c", r)
+			time.Sleep(delay)
+		}
+	}
+}
+
+func fib(x int) int {
+	if x < 2 {
+		return x
+	}
+	return fib(x-1) + fib(x-2)
 }
 
 func testPoint() {
