@@ -107,8 +107,30 @@ func main() {
 	//fmt.Println(f())
 	//topoSortPrint()
 	//testPoint()
-	clockServer()
+	//clockServer()
+	pipeline()
+}
 
+func pipeline() {
+	nat := make(chan int)
+	squ := make(chan int)
+
+	go func() {
+		for x := 0; ; x++ {
+			nat <- x
+		}
+	}()
+
+	go func() {
+		for {
+			x := <-nat
+			squ <- x * x
+		}
+	}()
+
+	for {
+		fmt.Println(<-squ)
+	}
 }
 
 func clockServer() {
