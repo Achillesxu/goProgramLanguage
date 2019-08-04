@@ -108,7 +108,28 @@ func main() {
 	//topoSortPrint()
 	//testPoint()
 	//clockServer()
-	pipeline()
+	//pipeline()
+	ch := make(chan string)
+	go sendFunc(ch)
+	go getFunc(ch)
+	time.Sleep(2e9)
+}
+
+func sendFunc(chSend chan string) {
+	chSend <- "hello world1"
+	chSend <- "hello world2"
+	chSend <- "hello world3"
+	chSend <- "hello world4"
+	chSend <- "hello world5"
+}
+
+func getFunc(chGet chan string) {
+	var getVal string
+	for {
+		getVal = <-chGet
+		fmt.Println(getVal)
+
+	}
 }
 
 func pipeline() {
