@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"github.com/Achillesxu/goProgramLanguage/util"
@@ -13,6 +14,7 @@ import (
 	"regexp"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -109,10 +111,36 @@ func main() {
 	//testPoint()
 	//clockServer()
 	//pipeline()
-	ch := make(chan string)
-	go sendFunc(ch)
-	go getFunc(ch)
-	time.Sleep(2e9)
+	//ch := make(chan string)
+	//go sendFunc(ch)
+	//go getFunc(ch)
+	//time.Sleep(2e9)
+	fmt.Println("Enter a grade")
+	grade, err := getFloat()
+	if err != nil {
+		log.Fatal(err)
+	}
+	var status string
+	if grade >= 60 {
+		status = "passing"
+	} else {
+		status = "failing"
+	}
+	fmt.Println("A grade of ", grade, "is ", status)
+}
+
+func getFloat() (float64, error) {
+	reader := bufio.NewReader(os.Stdin)
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return 0, err
+	}
+	input = strings.TrimSpace(input)
+	number, err := strconv.ParseFloat(input, 64)
+	if err != nil {
+		return 0, err
+	}
+	return number, nil
 }
 
 func sendFunc(chSend chan string) {
