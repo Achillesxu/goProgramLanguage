@@ -7,6 +7,7 @@ import (
 	"github.com/Achillesxu/goProgramLanguage/util"
 	"golang.org/x/net/html"
 	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -141,17 +142,39 @@ func main() {
 	//	status = "failing"
 	//}
 	//fmt.Println("A grade of ", grade, "is ", status)
-	var aaa = [3]int{1, 2, 3}
-	fmt.Println(aaa)
-	slice := []string{"a", "b"}
-	fmt.Println(slice, len(slice), cap(slice))
-	slice = append(slice, "d")
-	fmt.Println(slice, len(slice), cap(slice))
-	slice = append(slice, "d")
-	fmt.Println(slice, len(slice), cap(slice))
-	var intSlice []int
-	var strSlice []string
-	fmt.Printf("%#v, %#v", intSlice, strSlice)
+	//var aaa = [3]int{1, 2, 3}
+	//fmt.Println(aaa)
+	//slice := []string{"a", "b"}
+	//fmt.Println(slice, len(slice), cap(slice))
+	//slice = append(slice, "d")
+	//fmt.Println(slice, len(slice), cap(slice))
+	//slice = append(slice, "d")
+	//fmt.Println(slice, len(slice), cap(slice))
+	//var intSlice []int
+	//var strSlice []string
+	//fmt.Printf("%#v, %#v", intSlice, strSlice)
+	//files, err := ioutil.ReadDir("/Users/achilles_xushy/GoLandProjects/src/github.com/Achillesxu/goProgramLanguage")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//for _, file := range files {
+	//	if file.IsDir() {
+	//		fmt.Println("dir:", file.Name())
+	//	} else {
+	//		fmt.Println("file: ", file.Name())
+	//	}
+	//}
+	resp, err := http.Get("http://example.com")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(string(body))
+	}
 }
 
 func getFloat() (float64, error) {
