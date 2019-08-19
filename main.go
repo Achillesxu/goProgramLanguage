@@ -96,6 +96,20 @@ var prereqs = map[string][]string{
 	"programming languages": {"data structures", "computer organization"},
 }
 
+type address struct {
+	street     string
+	city       string
+	state      string
+	postalCode string
+}
+
+type subscriber struct {
+	name        string
+	rate        string
+	active      string
+	HomeAddress address
+}
+
 func main() {
 	//replaceStrMain()
 	//arraySlice()
@@ -115,18 +129,29 @@ func main() {
 	//go sendFunc(ch)
 	//go getFunc(ch)
 	//time.Sleep(2e9)
-	fmt.Println("Enter a grade")
-	grade, err := getFloat()
-	if err != nil {
-		log.Fatal(err)
-	}
-	var status string
-	if grade >= 60 {
-		status = "passing"
-	} else {
-		status = "failing"
-	}
-	fmt.Println("A grade of ", grade, "is ", status)
+	//fmt.Println("Enter a grade")
+	//grade, err := getFloat()
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//var status string
+	//if grade >= 60 {
+	//	status = "passing"
+	//} else {
+	//	status = "failing"
+	//}
+	//fmt.Println("A grade of ", grade, "is ", status)
+	var aaa = [3]int{1, 2, 3}
+	fmt.Println(aaa)
+	slice := []string{"a", "b"}
+	fmt.Println(slice, len(slice), cap(slice))
+	slice = append(slice, "d")
+	fmt.Println(slice, len(slice), cap(slice))
+	slice = append(slice, "d")
+	fmt.Println(slice, len(slice), cap(slice))
+	var intSlice []int
+	var strSlice []string
+	fmt.Printf("%#v, %#v", intSlice, strSlice)
 }
 
 func getFloat() (float64, error) {
