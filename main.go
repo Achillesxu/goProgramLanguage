@@ -7,7 +7,6 @@ import (
 	"github.com/Achillesxu/goProgramLanguage/util"
 	"golang.org/x/net/html"
 	"io"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -164,16 +163,27 @@ func main() {
 	//		fmt.Println("file: ", file.Name())
 	//	}
 	//}
-	resp, err := http.Get("http://example.com")
+	//resp, err := http.Get("http://example.com")
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+	//defer resp.Body.Close()
+	//body, err := ioutil.ReadAll(resp.Body)
+	//if err != nil {
+	//	log.Fatal(err)
+	//} else {
+	//	fmt.Println(string(body))
+	//}
+	http.HandleFunc("/hello", viewHandler)
+	err := http.ListenAndServe("localhost:8081", nil)
+	log.Fatal(err)
+}
+
+func viewHandler(writer http.ResponseWriter, request *http.Request) {
+	message := []byte("hello world")
+	_, err := writer.Write(message)
 	if err != nil {
 		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	} else {
-		fmt.Println(string(body))
 	}
 }
 
